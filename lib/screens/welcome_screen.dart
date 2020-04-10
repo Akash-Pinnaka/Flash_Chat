@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'login_screen.dart';
+import 'registration_screen.dart';
+import '../widgets/round_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  static const tag = "Welcome_Screen";
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -18,61 +23,56 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Container(
-                  child: Image.asset('images/logo.png'),
-                  height: 60.0,
+                Hero(
+                  transitionOnUserGestures: true,
+                  tag: "logo",
+                  child: Container(
+                    child: Image.asset('images/logo.png'),
+                    height: 65.0,
+                  ),
                 ),
-                Text(
-                  'Flash Chat',
-                  style: TextStyle(
+                TypewriterAnimatedTextKit(
+                  text: ['Flash Chat'],
+                  textStyle: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),
+                  speed: Duration(milliseconds: 250),
+                  totalRepeatCount: 3,
                 ),
               ],
             ),
             SizedBox(
-              height: 48.0,
+              height: 16.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 5.0,
+            Hero(
+              tag: "login",
+              child: RoundButton(
                 color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to login screen.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                  ),
-                ),
+                text: 'Log In',
+                onPress: () {
+                  setState(() {
+                    Navigator.pushNamed(context, LoginScreen.tag);
+                  });
+                },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
+            Hero(
+              tag: "register",
+              child: RoundButton(
                 color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Go to registration screen.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Register',
-                  ),
-                ),
+                text: "Register",
+                onPress: () {
+                  setState(() {
+                    Navigator.pushNamed(context, RegistrationScreen.tag);
+                  });
+                },
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
 }
+
